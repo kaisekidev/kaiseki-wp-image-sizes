@@ -16,20 +16,20 @@ use function is_numeric;
 final class BuiltInImageSizes implements HookCallbackProviderInterface
 {
     public function __construct(
-        /** @var BuiltInImageSizeConfig|null */
-        private readonly ?array $thumbnail = null,
-        /** @var BuiltInImageSizeConfig|null */
-        private readonly ?array $medium = null,
-        /** @var BuiltInImageSizeConfig|null */
-        private readonly ?array $mediumLarge = null,
-        /** @var BuiltInImageSizeConfig|null */
-        private readonly ?array $large = null,
+        /** @var BuiltInImageSizeConfig */
+        private readonly array $thumbnail = [],
+        /** @var BuiltInImageSizeConfig */
+        private readonly array $medium = [],
+        /** @var BuiltInImageSizeConfig */
+        private readonly array $mediumLarge = [],
+        /** @var BuiltInImageSizeConfig */
+        private readonly array $large = [],
     ) {
     }
 
     public function registerHookCallbacks(): void
     {
-        if (is_array($this->thumbnail)) {
+        if ($this->thumbnail !== []) {
             $size = $this->getSize($this->thumbnail);
             add_filter('option_thumbnail_size_w', fn() => $size[0]);
             add_filter('option_thumbnail_size_h', fn() => $size[1]);
@@ -40,7 +40,7 @@ final class BuiltInImageSizes implements HookCallbackProviderInterface
             add_filter('pre_update_option_thumbnail_crop', fn() => $size[2]);
         }
 
-        if (is_array($this->medium)) {
+        if ($this->medium !== []) {
             $size = $this->getSize($this->medium);
             add_filter('option_medium_size_w', fn() => $size[0]);
             add_filter('option_medium_size_h', fn() => $size[1]);
@@ -49,7 +49,7 @@ final class BuiltInImageSizes implements HookCallbackProviderInterface
             add_filter('pre_update_option_medium_size_h', fn() => $size[1]);
         }
 
-        if (is_array($this->mediumLarge)) {
+        if ($this->mediumLarge !== []) {
             $size = $this->getSize($this->mediumLarge);
             add_filter('option_medium_large_size_w', fn() => $size[0]);
             add_filter('option_medium_large_size_h', fn() => $size[1]);
@@ -58,7 +58,7 @@ final class BuiltInImageSizes implements HookCallbackProviderInterface
             add_filter('pre_update_option_medium_large_size_h', fn() => $size[1]);
         }
 
-        if (!is_array($this->large)) {
+        if (!$this->large !== []) {
             return;
         }
 

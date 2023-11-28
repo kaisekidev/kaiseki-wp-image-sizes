@@ -19,7 +19,6 @@ final class ImageSizesRegistryFactory
         $aspectRatios = $config->array('image_sizes/aspect_ratios', []);
 
         return new ImageSizesRegistry(
-            $container->get(ImageSizeLabelGeneratorInterface::class),
             $imageSizes,
             $aspectRatios
         );
