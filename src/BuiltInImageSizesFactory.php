@@ -18,13 +18,13 @@ final class BuiltInImageSizesFactory
         $config = Config::get($container);
 
         /** @var BuiltInImageSizeConfig $thumbnail */
-        $thumbnail = $config->array('image_sizes/built_in/thumbnail', []);
+        $thumbnail = $config->array('image_sizes/thumbnail', []);
         /** @var BuiltInImageSizeConfig $medium */
-        $medium = $config->array('image_sizes/built_in/medium', []);
+        $medium = $config->array('image_sizes/medium', []);
         /** @var BuiltInImageSizeConfig $mediumLarge */
-        $mediumLarge = $config->array('image_sizes/built_in/medium_large', []);
+        $mediumLarge = $config->array('image_sizes/medium_large', []);
         /** @var BuiltInImageSizeConfig $large */
-        $large = $config->array('image_sizes/built_in/large', []);
+        $large = $config->array('image_sizes/large', []);
 
         return new BuiltInImageSizes(
             $thumbnail,

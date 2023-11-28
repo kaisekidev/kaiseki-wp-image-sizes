@@ -14,7 +14,7 @@ final class BigImageSizeThresholdFactory
     ): BigImageSizeThreshold {
         $config = Config::get($container);
         /** @var false|int $threshold */
-        $threshold = $config->get('image_sizes/big_image_size_threshold', 2560);
+        $threshold = $config->get('image_sizes/big_image_threshold', 2560);
         return new BigImageSizeThreshold($threshold);
     }
 }
