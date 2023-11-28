@@ -12,18 +12,12 @@ final class ConfigProvider
     public function __invoke(): array
     {
         return [
-            'hook' => [
-                'provider' => [],
-            ],
             'dependencies' => [
-                'aliases' => [
-                    ImageSizeStringGeneratorInterface::class => ImageSizeStringGenerator::class,
-                ],
                 'factories' => [
                     BigImageSizeThreshold::class => BigImageSizeThresholdFactory::class,
-                    BuiltInImageSizes::class => BuiltInImageSizesFactory::class,
-                    ImageSizesRegistry::class => ImageSizesRegistryFactory::class,
-                    RemoveImageSizes::class => RemoveImageSizesFactory::class,
+                    WpImageSizes::class          => WpImageSizesFactory::class,
+                    ImageSizesRegistry::class    => ImageSizesRegistryFactory::class,
+                    RemoveImageSizes::class      => RemoveImageSizesFactory::class,
                 ],
             ],
         ];
