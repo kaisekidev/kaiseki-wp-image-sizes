@@ -8,6 +8,8 @@ interface ImageSizeInterface
 {
     public function name(): string;
 
+    public function label(): string;
+
     public function width(): int;
 
     public function height(): int;

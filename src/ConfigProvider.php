@@ -16,7 +16,9 @@ final class ConfigProvider
                 'provider' => [],
             ],
             'dependencies' => [
-                'aliases' => [],
+                'aliases' => [
+                    ImageSizeLabelGeneratorInterface::class => ImageSizeLabelGenerator::class,
+                ],
                 'factories' => [
                     BigImageSizeThreshold::class => BigImageSizeThresholdFactory::class,
                     BuiltInImageSizes::class => BuiltInImageSizesFactory::class,

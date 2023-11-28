@@ -6,21 +6,34 @@ namespace Kaiseki\WordPress\ImageSizes;
 
 use Kaiseki\WordPress\Hook\HookCallbackProviderInterface;
 
+use function array_keys;
+use function array_merge;
+
 final class ImageSizesRegistry implements HookCallbackProviderInterface
 {
+    /** @var array<string, string> */
+    private array $labels = [];
+
     /**
      * @param list<ImageSizeInterface>   $imageSizes
      * @param list<AspectRatioInterface> $aspectRatios
      */
     public function __construct(
-        private readonly array $imageSizes = [],
+        private readonly ImageSizeLabelGeneratorInterface $labelGenerator,
+        private array $imageSizes = [],
         private readonly array $aspectRatios = [],
     ) {
+        foreach ($this->aspectRatios as $aspectRatio) {
+            $this->imageSizes = array_merge($this->imageSizes, $aspectRatio->createImageSizes());
+        }
+
+        $this->labels = $this->getLabels($this->imageSizes);
     }
 
     public function registerHookCallbacks(): void
     {
         add_action('after_setup_theme', [$this, 'registerImageSizes']);
+        add_filter('image_size_names_choose', [$this, 'updateNames']);
     }
 
     public function registerImageSizes(): void
@@ -28,10 +41,23 @@ final class ImageSizesRegistry implements HookCallbackProviderInterface
         foreach ($this->imageSizes as $imageSize) {
             $this->addImageSize($imageSize);
         }
+    }
 
-        foreach ($this->aspectRatios as $aspectRatio) {
-            $this->addRatio($aspectRatio);
+    /**
+     * @param array<string, string> $names
+     *
+     * @return array<string, string>
+     */
+    public function updateNames(array $names): array
+    {
+        foreach (array_keys($names) as $name) {
+            if (!isset($this->labels[$name])) {
+                continue;
+            }
+            $names[$name] = $this->labels[$name];
         }
+
+        return $names;
     }
 
     private function addImageSize(ImageSizeInterface $imageSize): void
@@ -44,10 +70,25 @@ final class ImageSizesRegistry implements HookCallbackProviderInterface
         );
     }
 
-    private function addRatio(AspectRatioInterface $aspectRatio): void
+    /**
+     * @param list<ImageSizeInterface> $imageSizes
+     *
+     * @return array<string, string>
+     */
+    private function getLabels(array $imageSizes): array
     {
-        foreach ($aspectRatio->createImageSizes() as $imageSize) {
-            $this->addImageSize($imageSize);
+        $labels = [];
+
+        foreach ($imageSizes as $imageSize) {
+            $label = ($this->labelGenerator)($imageSize);
+
+            if ($label === '') {
+                continue;
+            }
+
+            $labels[$imageSize->name()] = $label;
         }
+
+        return $labels;
     }
 }

@@ -18,6 +18,10 @@ final class ImageSizesRegistryFactory
         /** @var list<AspectRatioInterface> $aspectRatios */
         $aspectRatios = $config->array('image_sizes/aspect_ratios', []);
 
-        return new ImageSizesRegistry($imageSizes, $aspectRatios);
+        return new ImageSizesRegistry(
+            $container->get(ImageSizeLabelGeneratorInterface::class),
+            $imageSizes,
+            $aspectRatios
+        );
     }
 }

@@ -11,12 +11,18 @@ class ImageSize implements ImageSizeInterface
         private int $width,
         private int $height = 0,
         private bool $crop = false,
+        private string $label = '',
     ) {
     }
 
     public function name(): string
     {
         return $this->name;
+    }
+
+    public function label(): string
+    {
+        return $this->label;
     }
 
     public function width(): int
