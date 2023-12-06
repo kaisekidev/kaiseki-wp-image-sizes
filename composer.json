@@ -30,8 +30,8 @@
   },
   "require": {
     "php": "^8.1",
-    "kaiseki/config": "^1.5.0",
-    "kaiseki/wp-hook": "dev-dev",
+    "kaiseki/config": "dev-master",
+    "kaiseki/wp-hook": "dev-master",
     "psr/container": "^1.1",
     "thecodingmachine/safe": "^1.3"
   },
