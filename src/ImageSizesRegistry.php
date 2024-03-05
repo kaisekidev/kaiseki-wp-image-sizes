@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Kaiseki\WordPress\ImageSizes;
 
-use Kaiseki\WordPress\Hook\HookCallbackProviderInterface;
+use Kaiseki\WordPress\Hook\HookProviderInterface;
 
+use function add_action;
+use function add_image_size;
 use function array_merge;
 
-final class ImageSizesRegistry implements HookCallbackProviderInterface
+final class ImageSizesRegistry implements HookProviderInterface
 {
     /**
      * @param list<ImageSizeInterface>   $imageSizes
@@ -20,7 +22,7 @@ final class ImageSizesRegistry implements HookCallbackProviderInterface
     ) {
     }
 
-    public function registerHookCallbacks(): void
+    public function addHooks(): void
     {
         add_action('after_setup_theme', [$this, 'registerImageSizes']);
     }

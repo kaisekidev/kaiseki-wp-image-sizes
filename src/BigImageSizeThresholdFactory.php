@@ -12,9 +12,10 @@ final class BigImageSizeThresholdFactory
     public function __invoke(
         ContainerInterface $container,
     ): BigImageSizeThreshold {
-        $config = Config::get($container);
-        /** @var false|int $threshold */
-        $threshold = $config->get('image_sizes/big_image_threshold', 2560);
+        $config = Config::fromContainer($container);
+        /** @var false|int|null $threshold */
+        $threshold = $config->get('image_sizes.big_image_threshold');
+
         return new BigImageSizeThreshold($threshold);
     }
 }

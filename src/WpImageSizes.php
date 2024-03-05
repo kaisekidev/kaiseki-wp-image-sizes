@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Kaiseki\WordPress\ImageSizes;
 
-use Kaiseki\WordPress\Hook\HookCallbackProviderInterface;
+use Kaiseki\WordPress\Hook\HookProviderInterface;
 
-final class WpImageSizes implements HookCallbackProviderInterface
+use function add_filter;
+
+final class WpImageSizes implements HookProviderInterface
 {
     public function __construct(
         private readonly ?WpImageSize $thumbnail = null,
@@ -16,7 +18,7 @@ final class WpImageSizes implements HookCallbackProviderInterface
     ) {
     }
 
-    public function registerHookCallbacks(): void
+    public function addHooks(): void
     {
         if ($this->thumbnail !== null) {
             add_filter('option_thumbnail_size_w', fn() => $this->thumbnail->width());

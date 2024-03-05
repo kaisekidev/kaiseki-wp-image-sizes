@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Kaiseki\WordPress\ImageSizes;
 
-use Kaiseki\WordPress\Hook\HookCallbackProviderInterface;
+use Kaiseki\WordPress\Hook\HookProviderInterface;
 
+use function add_action;
+use function add_filter;
 use function array_diff;
+use function remove_image_size;
 
-final class RemoveImageSizes implements HookCallbackProviderInterface
+final class RemoveImageSizes implements HookProviderInterface
 {
     public function __construct(
         /** @var list<string> */
@@ -16,7 +19,7 @@ final class RemoveImageSizes implements HookCallbackProviderInterface
     ) {
     }
 
-    public function registerHookCallbacks(): void
+    public function addHooks(): void
     {
         add_action('init', [$this, 'removeImageSize']);
         add_filter('intermediate_image_sizes', [$this, 'filterIntermediateImageSizes']);

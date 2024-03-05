@@ -12,9 +12,10 @@ final class RemoveImageSizesFactory
     public function __invoke(
         ContainerInterface $container,
     ): RemoveImageSizes {
-        $config = Config::get($container);
+        $config = Config::fromContainer($container);
         /** @var list<string> $sizes */
-        $sizes = $config->array('image_sizes/remove_sizes', []);
+        $sizes = $config->array('image_sizes.remove_sizes');
+
         return new RemoveImageSizes($sizes);
     }
 }

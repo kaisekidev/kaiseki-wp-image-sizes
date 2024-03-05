@@ -12,11 +12,11 @@ final class ImageSizesRegistryFactory
     public function __invoke(
         ContainerInterface $container,
     ): ImageSizesRegistry {
-        $config = Config::get($container);
+        $config = Config::fromContainer($container);
         /** @var list<ImageSizeInterface> $imageSizes */
-        $imageSizes = $config->array('image_sizes/image_sizes', []);
+        $imageSizes = $config->array('image_sizes.image_sizes');
         /** @var list<AspectRatioInterface> $aspectRatios */
-        $aspectRatios = $config->array('image_sizes/aspect_ratios', []);
+        $aspectRatios = $config->array('image_sizes.aspect_ratios');
 
         return new ImageSizesRegistry(
             $imageSizes,

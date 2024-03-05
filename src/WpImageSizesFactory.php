@@ -12,16 +12,16 @@ final class WpImageSizesFactory
     public function __invoke(
         ContainerInterface $container,
     ): WpImageSizes {
-        $config = Config::get($container);
+        $config = Config::fromContainer($container);
 
         /** @var WpImageSize|null $thumbnail */
-        $thumbnail = $config->get('image_sizes/thumbnail', null);
+        $thumbnail = $config->get('image_sizes.thumbnail');
         /** @var WpImageSize|null $medium */
-        $medium = $config->get('image_sizes/medium', null);
+        $medium = $config->get('image_sizes.medium');
         /** @var WpImageSize|null $mediumLarge */
-        $mediumLarge = $config->get('image_sizes/medium_large', null);
+        $mediumLarge = $config->get('image_sizes.medium_large');
         /** @var WpImageSize|null $large */
-        $large = $config->get('image_sizes/large', null);
+        $large = $config->get('image_sizes.large');
 
         return new WpImageSizes(
             $thumbnail,

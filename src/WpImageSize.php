@@ -7,9 +7,9 @@ namespace Kaiseki\WordPress\ImageSizes;
 class WpImageSize
 {
     public function __construct(
-        private int $width,
-        private int $height = 0,
-        private bool $crop = false,
+        private readonly int $width,
+        private readonly int $height = 0,
+        private readonly bool $crop = false,
     ) {
     }
 
@@ -26,5 +26,20 @@ class WpImageSize
     public function crop(): bool
     {
         return $this->crop;
+    }
+
+    public function withWidth(int $width): self
+    {
+        return new self($width, $this->height, $this->crop);
+    }
+
+    public function withHeight(int $height): self
+    {
+        return new self($this->width, $height, $this->crop);
+    }
+
+    public function withCrop(bool $crop = true): self
+    {
+        return new self($this->width, $this->height, $crop);
     }
 }
