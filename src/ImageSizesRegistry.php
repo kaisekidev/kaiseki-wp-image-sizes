@@ -32,7 +32,7 @@ final class ImageSizesRegistry implements HookProviderInterface
         $imageSizes = $this->imageSizes;
 
         foreach ($this->aspectRatios as $aspectRatio) {
-            $imageSizes = array_merge($this->imageSizes, $aspectRatio->createImageSizes());
+            array_push($imageSizes, ...$aspectRatio->createImageSizes());
         }
 
         foreach ($imageSizes as $imageSize) {
