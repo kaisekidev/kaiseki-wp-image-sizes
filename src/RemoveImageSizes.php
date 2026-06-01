@@ -9,12 +9,15 @@ use Kaiseki\WordPress\Hook\HookProviderInterface;
 use function add_action;
 use function add_filter;
 use function array_diff;
+use function array_values;
 use function remove_image_size;
 
 final class RemoveImageSizes implements HookProviderInterface
 {
+    /**
+     * @param list<string> $removeSizes
+     */
     public function __construct(
-        /** @var list<string> */
         private readonly array $removeSizes = [],
     ) {
     }
@@ -39,6 +42,6 @@ final class RemoveImageSizes implements HookProviderInterface
      */
     public function filterIntermediateImageSizes(array $sizes): array
     {
-        return array_diff($sizes, $this->removeSizes);
+        return array_values(array_diff($sizes, $this->removeSizes));
     }
 }

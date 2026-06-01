@@ -5,15 +5,21 @@ declare(strict_types=1);
 namespace Kaiseki\WordPress\ImageSizes;
 
 use function array_map;
+use function array_values;
 use function floor;
 
 final class AspectRatio implements AspectRatioInterface
 {
+    /**
+     * @param string    $name
+     * @param int       $x
+     * @param int       $y
+     * @param list<int> $widths
+     */
     public function __construct(
         private readonly string $name,
         private readonly int $x,
         private readonly int $y,
-        /** @var list<int> */
         private readonly array $widths,
     ) {
     }
@@ -46,8 +52,7 @@ final class AspectRatio implements AspectRatioInterface
 
     public function withWidths(int ...$widths): self
     {
-        // @phpstan-ignore-next-line
-        return new self($this->name, $this->x, $this->y, $widths);
+        return new self($this->name, $this->x, $this->y, array_values($widths));
     }
 
     private function height(int $width): int
