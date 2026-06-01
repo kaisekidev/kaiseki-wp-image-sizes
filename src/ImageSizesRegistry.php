@@ -8,7 +8,7 @@ use Kaiseki\WordPress\Hook\HookProviderInterface;
 
 use function add_action;
 use function add_image_size;
-use function array_merge;
+use function array_push;
 
 final class ImageSizesRegistry implements HookProviderInterface
 {
